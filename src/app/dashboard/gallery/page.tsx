@@ -2,6 +2,12 @@
 import { UploadButton } from "@/components/upload-button";
 import cloudinary from 'cloudinary';
 import { CloudinaryImage } from "../../../../components/cloudinaryImage";
+import { ForceRefresh } from '@/components/force-refresh';
+
+export type SearchResult = {
+  public_id: string
+  tags: string[]
+}
 
 export default async function GalleryPage() {
   const results = await cloudinary.v2.search
@@ -13,13 +19,9 @@ export default async function GalleryPage() {
 
   console.log(results);
 
-  type SearchResult = {
-    public_id: string
-    tags: string[]
-  }
-
   return (
     <div className="flex flex-1 flex-col gap-4 p-4">
+      <ForceRefresh />
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">Gallery</h1>
@@ -34,14 +36,9 @@ export default async function GalleryPage() {
         {results.resources.map( (result: SearchResult) => (
           <CloudinaryImage 
             key={result.public_id} 
-            publicId={result.public_id}
+            imageData={result as SearchResult}
+            alt={result.public_id}
             src={result.public_id}
-            alt={result.public_id} 
-            tags={result.tags}
-            path="/dashboard/gallery"
-            width={400} 
-            height={400} 
-            sizes="100vw" 
           />
         ))}
       </div>

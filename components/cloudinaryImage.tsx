@@ -1,47 +1,67 @@
 "use client";
 
-import { CldImage } from "next-cloudinary";
+import { CldImage, CldImageProps } from "next-cloudinary";
 import { HeartIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { setAsFavoriteAction } from "../src/app/dashboard/gallery/actions";
-import { useTransition } from "react";
+import { useTransition, useState } from "react";
+import { SearchResult } from "../src/app/dashboard/gallery/page";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function CloudinaryImage(props: any) {
+export function CloudinaryImage(
+  props: {
+    imageData: SearchResult;
+    onUnheart?: (unheartedResource: SearchResult) => void;
+  } & CldImageProps
+) {
   const [transition, startTransition] = useTransition();
 
-  const { publicId, path, ...otherProps } = props;
+  const { imageData, onUnheart } = props;
 
-  const isFavorite = props.tags.includes('favorite');
+  const [isFavorite, setIsFavorite] = useState(
+    imageData.tags.includes('favorite')
+  );
 
   const handleSetAsFavorite = () => {
-    startTransition(() => {
-      setAsFavoriteAction(publicId as string, isFavorite ? false : true, path);
-    });
+    setAsFavoriteAction(imageData.public_id, isFavorite ? false : true);
   }
 
   return (
-    <div className="relative aspect-square  rounded-lg w-full h-full">
+    <div className="relative aspect-square rounded-lg w-full h-full">
       <CldImage 
-        {...otherProps}
+        src={imageData.public_id}
+        alt={imageData.public_id}
+        width={400}
+        height={400}
+        sizes="100vw"
         className="object-cover h-full w-full z-0 relative"
       />
       <div className="absolute top-0 right-0 w-12 h-12 flex items-center justify-center ">
-        <Button className="rounded-full z-10 m-0" variant="secondary" size="icon" onClick={() => {
-          handleSetAsFavorite();
-        }}>
-          {isFavorite ? (
+        {isFavorite ? (
+          <Button className="rounded-full z-10 m-0" variant="secondary" size="icon" onClick={() => {
+            onUnheart?.(imageData);
+            setIsFavorite(!isFavorite);
+            startTransition(() => {
+              handleSetAsFavorite();
+            });
+          }}>
             <HeartIcon 
               className="size-4"
               weight="fill"
             />
-          ) : (
+          </Button>
+        ) : (
+          <Button className="rounded-full z-10 m-0" variant="secondary" size="icon" onClick={() => {
+            setIsFavorite(!isFavorite);
+            startTransition(() => {
+              handleSetAsFavorite();
+            });
+          }}>
             <HeartIcon 
               className="size-4"
               weight="regular"
             />
-          )}
-        </Button>
+          </Button>
+        )}
       </div>
     </div>
   )
