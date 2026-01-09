@@ -26,14 +26,14 @@ export function CloudinaryImage(
   }
 
   return (
-    <div className="relative aspect-square rounded-lg w-full h-full">
+    <div className="relative">
       <CldImage 
         src={imageData.public_id}
         alt={imageData.public_id}
-        width={400}
-        height={400}
         sizes="100vw"
-        className="object-cover h-full w-full z-0 relative"
+        width="400"
+        height="300"
+        className="relative"
       />
       <div className="absolute top-0 right-0 w-12 h-12 flex items-center justify-center ">
         {isFavorite ? (
