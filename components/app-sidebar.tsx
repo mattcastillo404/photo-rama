@@ -14,7 +14,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
-import { Upload, Image, GalleryVerticalEnd, Trash, Heart } from "lucide-react"
+import { Image as ImageIcon, Rows as RowsIcon, Trash as TrashIcon, Heart as HeartIcon } from "@phosphor-icons/react"
 
 // This is sample data.
 const data = {
@@ -25,27 +25,22 @@ const data = {
       url: "/dashboard",
       items: [
         {
-          title: "Upload",
-          url: "/dashboard/upload",
-          icon: <Upload />,
-        },
-        {
           title: "Gallery",
           url: "/dashboard/gallery",
-          icon: <Image />,
+          icon: <ImageIcon />,
         },
         {
           title: "Albums",
           url: "/dashboard/albums",
-          icon: <GalleryVerticalEnd />,
+          icon: <RowsIcon />,
         },
         { title: "Archive",
           url: "/dashboard/archive",
-          icon: <Trash />,
+          icon: <TrashIcon />,
         },
         { title: "Favorites",
           url: "/dashboard/favorites",  
-          icon: <Heart />,
+          icon: <HeartIcon />,
         },
       ],
     }
@@ -55,7 +50,7 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
   return (
-    <Sidebar {...props}>
+    <Sidebar variant="inset" {...props}>
       {/* <SidebarHeader>
         <VersionSwitcher
           versions={data.versions}
@@ -74,7 +69,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild isActive={pathname === item.url}>
                       <Link href={item.url}>
-                        {React.cloneElement(item.icon, { className: "size-4" })}
+                        {React.cloneElement(item.icon, { className: "size-4", "aria-hidden": "true" })}
                         {item.title}
                       </Link>
                     </SidebarMenuButton>
