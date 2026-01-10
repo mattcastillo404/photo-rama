@@ -12,13 +12,17 @@ export default async function FavoritesPage() {
     .execute() as { resources: SearchResult[] }
 
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4">
+    <div className="flex flex-1 flex-col gap-4 p-4 overflow-y-scroll">
       <ForceRefresh />
 
-      <h1 className="text-2xl font-bold">Favorites</h1>
-      <p className="text-muted-foreground">
-        Your favorite photos
-      </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">Favorites</h1>
+          <p className="text-muted-foreground">
+            Your favorite photos
+          </p>
+        </div>
+      </div>
       <FavoritesList initialResources={results.resources} />
     </div>
   );
