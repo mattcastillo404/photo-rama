@@ -49,7 +49,7 @@ Photo-Rama is a full-featured photo gallery application that allows users to upl
 
 ## Project Structure
 
-``
+```text
 photo-rama/
 ├── src/app/
 │   ├── dashboard/          # Main dashboard layout and pages
@@ -67,7 +67,7 @@ photo-rama/
 │   └── ui/                 # shadcn/ui components
 └── lib/
     └── utils.ts            # Utility functions
-``
+```
 
 ## Getting Started
 
@@ -86,17 +86,17 @@ photo-rama/
 npm install
 ```
 
-3. Set up environment variables:
+1. Set up environment variables:
    - Configure Cloudinary credentials
    - Set up upload preset named "photo-rama"
 
-4. Run the development server:
+2. Run the development server:
 
 ```bash
 npm run dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
+1. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## Key Features Implementation
 
